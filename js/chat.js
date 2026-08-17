@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 .single();
             
             window.friendProfile = fProfile;
-            updateFriendStatusUI(fProfile);
+            window.updateFriendStatusUI(fProfile);
         }
     }
 
@@ -308,7 +308,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             friendStatusText.innerHTML = `<span class="typing-dots text-primary fw-bold">Typing<span></span><span></span><span></span></span>`;
         } else {
             // Revert to normal status
-            if (window.friendProfile) updateFriendStatusUI(window.friendProfile);
+            if (window.friendProfile) window.updateFriendStatusUI(window.friendProfile);
         }
     };
 
