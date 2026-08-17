@@ -51,12 +51,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         // Fetch Current Profile
-        const { data: profile } = await window.supabase
+        const { data: profile, error: profileErr } = await window.supabase
             .from('profiles')
             .select('*')
             .eq('id', userId)
             .single();
         
+        if (profileErr || !profile) {
+            console.error("Failed to load profile:", profileErr);
+            alert("Failed to load user profile. Please ensure you have set up Supabase and added your API keys to js/config.js.");
+            return;
+        }
+
         window.currentUserProfile = profile;
         currentUserAvatar.textContent = profile.display_name.charAt(0).toUpperCase();
 
