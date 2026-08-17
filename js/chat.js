@@ -379,10 +379,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             // Edit existing
             const mId = editMessageId;
             closePreview();
-            await window.supabase
+            const { data, error } = await window.supabase
                 .from('messages')
                 .update({ message_text: text, is_edited: true, edited_at: new Date().toISOString() })
-                .eq('id', mId);
+                .eq('id', mId)
+                .select()
+                .single();
+            
+            if (data) window.handleUpdatedRealtimeMessage(data);
         } else {
             // Send new
             const insertObj = {
@@ -400,9 +404,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             
             closePreview();
 
-            await window.supabase
+            const { data, error } = await window.supabase
                 .from('messages')
-                .insert([insertObj]);
+                .insert([insertObj])
+                .select()
+                .single();
+            
+            if (data) window.handleNewRealtimeMessage(data);
         }
     }
 

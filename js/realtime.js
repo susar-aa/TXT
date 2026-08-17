@@ -17,21 +17,30 @@ window.RealtimeManager = {
 
         // Listen for new messages, updates (edits/deletes)
         this.channel
-            .on('postgres', { event: 'INSERT', schema: 'public', table: 'messages', filter: `conversation_id=eq.${conversationId}` }, payload => {
+            .on('postgres', { event: 'INSERT', schema: 'public', table: 'messages' }, payload => {
+                console.log("REALTIME: New message", payload);
                 const msg = payload.new;
-                window.handleNewRealtimeMessage(msg);
+                // Only handle if it belongs to our active conversation (client side filter)
+                if (msg.conversation_id === window.activeConversationId) {
+                    window.handleNewRealtimeMessage(msg);
+                }
             })
-            .on('postgres', { event: 'UPDATE', schema: 'public', table: 'messages', filter: `conversation_id=eq.${conversationId}` }, payload => {
+            .on('postgres', { event: 'UPDATE', schema: 'public', table: 'messages' }, payload => {
+                console.log("REALTIME: Updated message", payload);
                 const msg = payload.new;
-                window.handleUpdatedRealtimeMessage(msg);
+                if (msg.conversation_id === window.activeConversationId) {
+                    window.handleUpdatedRealtimeMessage(msg);
+                }
             })
             // Listen for read receipts
             .on('postgres', { event: 'INSERT', schema: 'public', table: 'message_reads' }, payload => {
+                console.log("REALTIME: Read receipt", payload);
                 const readRecord = payload.new;
                 window.handleRealtimeReadReceipt(readRecord);
             })
             // Listen for profile changes (online status / last seen)
             .on('postgres', { event: 'UPDATE', schema: 'public', table: 'profiles' }, payload => {
+                console.log("REALTIME: Profile update", payload);
                 const profile = payload.new;
                 if (window.friendProfile && profile.id === window.friendProfile.id) {
                     window.updateFriendStatusUI(profile);
@@ -42,6 +51,7 @@ window.RealtimeManager = {
         this.channel
             .on('presence', { event: 'sync' }, () => {
                 const state = this.channel.presenceState();
+                console.log("REALTIME: Presence sync", state);
                 window.handlePresenceSync(state);
             });
 
