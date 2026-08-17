@@ -56,7 +56,9 @@ window.RealtimeManager = {
             });
 
         // Subscribe
-        this.channel.subscribe(async (status) => {
+        this.channel.subscribe(async (status, err) => {
+            console.log("REALTIME STATUS:", status, err);
+            
             if (status === 'SUBSCRIBED') {
                 // Track our own presence (not typing initially)
                 await this.channel.track({ typing: false, user_id: window.currentUserProfile.id });
