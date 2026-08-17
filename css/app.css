@@ -1,0 +1,48 @@
+/* Global Application Styles */
+:root {
+    --app-transition: all 0.2s ease-in-out;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    overscroll-behavior-y: none; /* Prevent pull-to-refresh on mobile */
+}
+
+/* Avatar base styles */
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+/* Cursor pointers */
+.cursor-pointer {
+    cursor: pointer;
+}
+
+/* Scrollbar styling for webkit */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+[data-bs-theme="dark"] ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Prevent text selection on certain elements */
+.no-select {
+    user-select: none;
+    -webkit-user-select: none;
+}

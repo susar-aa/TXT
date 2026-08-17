@@ -1,0 +1,301 @@
+/* Chat Layout Styles */
+.sidebar {
+    width: 300px;
+    min-width: 300px;
+    z-index: 1000;
+    transition: transform 0.3s ease-in-out;
+}
+
+.chat-main {
+    min-width: 0; /* Important for flex-grow with text truncation */
+    height: 100vh;
+}
+
+/* Mobile Sidebar Toggle */
+@media (max-width: 767.98px) {
+    .sidebar {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        transform: translateX(-100%);
+        width: 85%;
+        max-width: 320px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    }
+    
+    .sidebar.show {
+        transform: translateX(0);
+    }
+}
+
+/* Conversation Items */
+.conversation-item {
+    transition: background-color 0.2s;
+}
+
+.conversation-item:hover {
+    background-color: rgba(0,0,0,0.05);
+}
+
+[data-bs-theme="dark"] .conversation-item:hover {
+    background-color: rgba(255,255,255,0.05);
+}
+
+.conversation-item.active {
+    background-color: rgba(13, 110, 253, 0.1);
+}
+
+[data-bs-theme="dark"] .conversation-item.active {
+    background-color: rgba(13, 110, 253, 0.2);
+}
+
+/* Messages Area */
+.messages-container {
+    scroll-behavior: smooth;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Message Bubbles */
+.message-wrapper {
+    max-width: 85%;
+    margin-bottom: 0.5rem;
+    position: relative;
+    display: inline-flex;
+    flex-direction: column;
+}
+
+.message-wrapper.outgoing {
+    align-self: flex-end;
+    align-items: flex-end;
+}
+
+.message-wrapper.incoming {
+    align-self: flex-start;
+    align-items: flex-start;
+}
+
+.message-bubble {
+    padding: 0.6rem 1rem;
+    border-radius: 18px;
+    word-break: break-word;
+    position: relative;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.outgoing .message-bubble {
+    background-color: #0d6efd;
+    color: white;
+    border-bottom-right-radius: 4px;
+}
+
+[data-bs-theme="dark"] .outgoing .message-bubble {
+    background-color: #0b5ed7;
+}
+
+.incoming .message-bubble {
+    background-color: #e9ecef;
+    color: #212529;
+    border-bottom-left-radius: 4px;
+}
+
+[data-bs-theme="dark"] .incoming .message-bubble {
+    background-color: #343a40;
+    color: #f8f9fa;
+}
+
+/* Soft Deleted Messages */
+.message-bubble.deleted {
+    background-color: transparent !important;
+    border: 1px solid #dee2e6;
+    color: #6c757d !important;
+    font-style: italic;
+    box-shadow: none;
+}
+
+[data-bs-theme="dark"] .message-bubble.deleted {
+    border-color: #495057;
+    color: #adb5bd !important;
+}
+
+/* Message Meta (Time & Status) */
+.message-meta {
+    font-size: 0.7rem;
+    margin-top: 0.2rem;
+    color: #6c757d;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+[data-bs-theme="dark"] .message-meta {
+    color: #adb5bd;
+}
+
+.read-receipts {
+    letter-spacing: -2px;
+}
+
+.read-receipts .read {
+    color: #0d6efd;
+}
+
+/* Date Separators */
+.date-separator {
+    text-align: center;
+    margin: 1.5rem 0;
+    position: relative;
+}
+
+.date-separator span {
+    background-color: rgba(0,0,0,0.05);
+    padding: 0.2rem 0.8rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+[data-bs-theme="dark"] .date-separator span {
+    background-color: rgba(255,255,255,0.05);
+    color: #adb5bd;
+}
+
+.unread-separator {
+    text-align: center;
+    margin: 1.5rem 0;
+}
+
+.unread-separator span {
+    background-color: #dc3545;
+    color: white;
+    padding: 0.2rem 0.8rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* Message Actions Menu */
+.message-actions {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: opacity 0.2s;
+    background: transparent;
+    border: none;
+    color: #6c757d;
+    padding: 0.5rem;
+    border-radius: 50%;
+}
+
+.outgoing .message-actions {
+    left: -35px;
+}
+
+.incoming .message-actions {
+    right: -35px;
+}
+
+.message-wrapper:hover .message-actions {
+    opacity: 1;
+}
+
+/* Mobile specific action menu trigger */
+@media (max-width: 767.98px) {
+    .message-actions {
+        opacity: 1;
+        position: static;
+        transform: none;
+        padding: 0;
+        margin-top: 2px;
+    }
+    
+    .outgoing .message-actions {
+        align-self: flex-end;
+    }
+    
+    .incoming .message-actions {
+        align-self: flex-start;
+    }
+}
+
+/* Replying to specific message preview inside bubble */
+.message-reply-ref {
+    background-color: rgba(0,0,0,0.1);
+    padding: 0.4rem;
+    border-radius: 8px;
+    margin-bottom: 0.4rem;
+    font-size: 0.85rem;
+    border-left: 3px solid rgba(0,0,0,0.2);
+    cursor: pointer;
+}
+
+[data-bs-theme="dark"] .message-reply-ref {
+    background-color: rgba(255,255,255,0.1);
+    border-left: 3px solid rgba(255,255,255,0.3);
+}
+
+.outgoing .message-reply-ref {
+    background-color: rgba(255,255,255,0.2);
+    border-left: 3px solid rgba(255,255,255,0.5);
+    color: white;
+}
+
+/* Forwarded indicator */
+.forwarded-indicator {
+    font-size: 0.75rem;
+    font-style: italic;
+    opacity: 0.8;
+    margin-bottom: 0.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+/* Search results panel */
+.search-results-list .search-result-item {
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+.search-results-list .search-result-item:hover {
+    background-color: rgba(0,0,0,0.05);
+}
+
+[data-bs-theme="dark"] .search-results-list .search-result-item:hover {
+    background-color: rgba(255,255,255,0.05);
+}
+
+/* Composer */
+#messageInput {
+    background-color: #f8f9fa;
+}
+
+[data-bs-theme="dark"] #messageInput {
+    background-color: #2b3035;
+    color: #f8f9fa;
+}
+
+/* Typing indicator animation */
+.typing-dots span {
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    background-color: currentColor;
+    border-radius: 50%;
+    margin: 0 2px;
+    animation: typing 1.4s infinite both;
+}
+
+.typing-dots span:nth-child(1) { animation-delay: 0s; }
+.typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+.typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typing {
+    0%, 80%, 100% { transform: translateY(0); opacity: 0.5; }
+    40% { transform: translateY(-4px); opacity: 1; }
+}
