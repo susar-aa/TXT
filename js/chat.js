@@ -39,8 +39,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const previewText = document.getElementById('previewText');
     const closePreviewBtn = document.getElementById('closePreviewBtn');
 
-    // 1. Initialize
-    await init();
+    // 1. Initialization will be called at the bottom of the script
 
     async function init() {
         // Check local storage for identity
@@ -495,4 +494,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             alert("Message is in older history.");
         }
     }
+
+    // Call initialize after all functions and variables are defined
+    await init();
 });
