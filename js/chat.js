@@ -80,8 +80,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         } else {
             console.error("No conversations found for user.");
         }
-
-        setupEventListeners();
     }
 
     async function loadConversationDetails(convId) {
